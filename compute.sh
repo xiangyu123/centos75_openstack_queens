@@ -2,7 +2,8 @@
 
 echo "=== Install and Setup OpenStack Queens on Compute Node ==="
 
-yum -y update
+#yum -y update
+rpm -ivh *.rpm
 
 # == Define variable ==
 # === START EDIT ===
@@ -10,12 +11,12 @@ CONTROLLER_MGMT_ADDR=10.100.0.5
 COMPUTE1_MGMT_ADDR=10.100.0.6
 COMPUTE1_PROVIDER_INTERFACE=eth1
 
-RABBIT_PASS=rahasia
+RABBIT_PASS=openstack
 
-NOVA_USER_PASS=rahasia
-NOVA_PLACEMENT_PASS=rahasia
+NOVA_USER_PASS=openstack
+NOVA_PLACEMENT_PASS=openstack
 
-NEUTRON_USER_PASS=rahasia
+NEUTRON_USER_PASS=openstack
 
 # === End EDIT ====
 
@@ -47,7 +48,9 @@ systemctl start chronyd.service
 printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
 echo "Installing OpenStack Packages ..."
 yum -y install centos-release-openstack-queens
-yum -y upgrade
+#yum -y upgrade
+yum clean all
+yum -y install python2-urllib3
 yum -y install python-openstackclient
 yum -y install openstack-selinux
 
